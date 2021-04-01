@@ -7,7 +7,7 @@ class UserBase(BaseModel):
     email: str
     first_name: str
     last_name: str
-    #image_url: Optional[str] = None
+    # image_url: Optional[str] = None
 
 class UserCreate(UserBase):
     password: str
