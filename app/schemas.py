@@ -3,15 +3,21 @@ from pydantic import BaseModel
 #from .models import Subject 
 
 class UserBase(BaseModel):
+    name: str
     email: str
+    first_name: str
+    last_name: str
+    #image_url: Optional[str] = None
 
 class UserCreate(UserBase):
     password: str
 
 class User(UserBase):
-    id: int
-    name: str
-    #is_active: bool
+    id: str
+    created_by: int
+    account_id: int
+    role_id: int
+    active: bool
     #teachers: List[Subject] = []
 
     class Config:

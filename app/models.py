@@ -3,16 +3,20 @@ from sqlalchemy.orm import relationship
 
 from .database import Base
 
-
 class User(Base):
     __tablename__ = "sys_users"
 
     id = Column(Integer, primary_key=True, index=True)
-    # role_id = Column(Integer, ForeignKey("users.id"))
+    created_by = Column(Integer, index=True)
+    account_id = Column(Integer, index=True)
+    role_id = Column(Integer, index=True)
     name = Column(String, index=True)
     email = Column(String, unique=True, index=True)
     password = Column(String)
-    #is_active = Column(Boolean, default=True)
+    first_name = Column(String)
+    last_name = Column(String)
+    #image_url = Column(String)
+    active = Column(Boolean, default=True)
 
     #subjects = relationship("Subject", back_populates="user_creator")
 
