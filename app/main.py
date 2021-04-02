@@ -6,14 +6,14 @@ from sqlalchemy.orm import Session
 # from . import crud, models, schemas
 # from .database import SessionLocal, engine
 from .dependencies import get_query_token, get_token_header
-from .routers import items
-from .routers.users import base
+from .routers import items, users
+#from .routers.users import base
 # models.Base.metadata.create_all(bind=engine)
 
 #app = FastAPI(dependencies=[Depends(get_query_token)])
 app = FastAPI()
 
-app.include_router(base.router)
+app.include_router(users.router)
 app.include_router(items.router)
 
 # Dependency
