@@ -1,27 +1,28 @@
-from typing import List
+# from typing import List
 
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
 
-from . import crud, models, schemas
-from .database import SessionLocal, engine
+# from . import crud, models, schemas
+# from .database import SessionLocal, engine
 from .dependencies import get_query_token, get_token_header
 from .routers import items
+from .routers.users import base
+# models.Base.metadata.create_all(bind=engine)
 
-models.Base.metadata.create_all(bind=engine)
-
-# app = FastAPI(dependencies=[Depends(get_query_token)])
+#app = FastAPI(dependencies=[Depends(get_query_token)])
 app = FastAPI()
 
+app.include_router(base.router)
 app.include_router(items.router)
 
 # Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# def get_db():
+#     db = SessionLocal()
+#     try:
+#         yield db
+#     finally:
+#         db.close()
 
 @app.get("/")
 async def root():
