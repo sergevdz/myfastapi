@@ -3,6 +3,10 @@ from pydantic import BaseModel, ValidationError, validator
 from . import models, schemas
 
 
+def get_users(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.User).offset(skip).limit(limit).all()
+
+
 def get_user(db: Session, user_id: int):
     #return {"userId": user_id}
     return db.query(models.User).filter(models.User.id == user_id).first()
@@ -10,10 +14,6 @@ def get_user(db: Session, user_id: int):
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
-
-
-def get_users(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.User).offset(skip).limit(limit).all()
 
 
 def create_user(db: Session, user: schemas.UserCreate):
@@ -32,6 +32,19 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
+    return db_user
+
+def update_user(db: Session, user_id: int , user: schemas.UserUpdate):
+    # db_user = db.query(models.User).filter(models.User.id == user.id).first()
+    db_user = db.query(models.User).get(user_id)
+    if (db_user):
+        db_user.name = user.name
+        db_user.email = user.email
+        db_user.first_name = user.first_name
+        db_user.last_name = user.last_name
+        # db.update()
+        db.commit()
+        db.refresh(db_user)
     return db_user
 
 def delete_user(db: Session, user_id: int):

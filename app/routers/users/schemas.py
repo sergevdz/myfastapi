@@ -12,6 +12,9 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
 
+class UserUpdate(UserBase):
+    active: bool
+
 class User(UserBase):
     id: str
     created_by: int
